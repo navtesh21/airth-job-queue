@@ -1,0 +1,20 @@
+# Render Blueprint for the NestJS API.
+# Create a free PostgreSQL database on Neon (or Render) and set DATABASE_URL in the dashboard.
+services:
+  - type: web
+    name: job-queue-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_SSL
+        value: "true"
+      - key: CORS_ORIGIN
+        sync: false
